@@ -1,0 +1,47 @@
+<div class="history-page">
+  <div class="page-header">
+    <div class="header-row">
+      <div>
+        <h1>Histórico</h1>
+        <p>{{ history.length }} conversão(ões) salva(s)</p>
+      </div>
+      <button class="btn btn-ghost" *ngIf="history.length > 0 && !confirmClear"
+              (click)="confirmClear = true">
+        <span class="material-icons">delete_outline</span>
+        Limpar
+      </button>
+      <div class="confirm-btns" *ngIf="confirmClear">
+        <button class="btn btn-ghost" (click)="confirmClear = false">Cancelar</button>
+        <button class="btn btn-danger" (click)="clearAll()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="history.length === 0">
+    <span class="material-icons">history</span>
+    <p>Nenhuma conversão realizada ainda.</p>
+  </div>
+
+  <div class="history-list" *ngIf="history.length > 0">
+    <div class="history-item card" *ngFor="let conv of history">
+      <div class="item-main">
+        <div class="currencies">
+          <span class="from-cur">{{ conv.fromCurrency }}</span>
+          <span class="material-icons arrow">arrow_forward</span>
+          <span class="to-cur">{{ conv.toCurrency }}</span>
+        </div>
+        <div class="amounts">
+          <span class="from-amount">{{ formatNumber(conv.amount) }}</span>
+          <span class="to-amount">{{ formatNumber(conv.result) }}</span>
+        </div>
+        <div class="rate-info">Taxa: 1 {{ conv.fromCurrency }} = {{ formatNumber(conv.rate) }} {{ conv.toCurrency }}</div>
+      </div>
+      <div class="item-footer">
+        <span class="timestamp">{{ formatTime(conv.timestamp) }}</span>
+        <button class="btn-icon" (click)="remove(conv.id)" title="Remover">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

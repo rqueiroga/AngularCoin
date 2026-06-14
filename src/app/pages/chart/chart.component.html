@@ -1,0 +1,68 @@
+<div class="chart-page">
+  <div class="page-header">
+    <h1>Gráfico de Cotações</h1>
+    <p>Variação histórica de taxas de câmbio</p>
+  </div>
+
+  <!-- Controles -->
+  <div class="controls card">
+    <div class="selects">
+      <select [(ngModel)]="fromCurrency" (change)="loadChart()">
+        <option *ngFor="let c of currencies" [value]="c.code">{{ c.code }}</option>
+      </select>
+      <span class="material-icons">arrow_forward</span>
+      <select [(ngModel)]="toCurrency" (change)="loadChart()">
+        <option *ngFor="let c of currencies" [value]="c.code">{{ c.code }}</option>
+      </select>
+    </div>
+    <div class="period-btns">
+      <button [class.active]="days === 7"  (click)="days = 7;  loadChart()">7d</button>
+      <button [class.active]="days === 30" (click)="days = 30; loadChart()">30d</button>
+      <button [class.active]="days === 90" (click)="days = 90; loadChart()">90d</button>
+    </div>
+  </div>
+
+  <!-- Aviso de dados simulados -->
+  <div class="simulated-banner" *ngIf="isSimulated && !loading">
+    <span class="material-icons">info</span>
+    Dados históricos indisponíveis no momento — exibindo projeção baseada na taxa atual.
+  </div>
+
+  <!-- Estatísticas do período -->
+  <div class="stats-row" *ngIf="chartData.length > 0 && !loading">
+    <div class="stat-card card">
+      <span class="stat-label">Mínimo</span>
+      <span class="stat-value">{{ fmt(minRate) }}</span>
+    </div>
+    <div class="stat-card card">
+      <span class="stat-label">Máximo</span>
+      <span class="stat-value">{{ fmt(maxRate) }}</span>
+    </div>
+    <div class="stat-card card">
+      <span class="stat-label">Média</span>
+      <span class="stat-value">{{ fmt(avgRate) }}</span>
+    </div>
+    <div class="stat-card card">
+      <span class="stat-label">Variação</span>
+      <span class="stat-value"
+            [class.positive]="changePercent >= 0"
+            [class.negative]="changePercent < 0">
+        {{ fmtPct(changePercent) }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Erro -->
+  <div class="error-msg" *ngIf="error">
+    <span class="material-icons">error_outline</span> {{ error }}
+  </div>
+
+  <!-- Canvas do gráfico -->
+  <div class="chart-container card">
+    <div class="loading-overlay" *ngIf="loading">
+      <span class="material-icons spin">refresh</span>
+      <p>Carregando dados...</p>
+    </div>
+    <canvas #chartCanvas></canvas>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #1a73e8;
+  --primary-dark: #1557b0;
+  --accent: #00bcd4;
+  --bg: #0f1117;
+  --bg-card: #1a1d2e;
+  --bg-input: #252840;
+  --text: #e8eaf6;
+  --text-muted: #8892b0;
+  --border: #2d3154;
+  --success: #4caf50;
+  --warning: #ff9800;
+  --danger: #f44336;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.material-icons {
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+/* container centralizado para desktop */
+.page-container {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &-primary {
+    background: var(--primary);
+    color: #fff;
+    &:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    &:active { transform: translateY(0); }
+  }
+  &-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    &:hover { background: var(--bg-input); color: var(--text); }
+  }
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+input, select {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  &:focus { border-color: var(--primary); }
+  option { background: var(--bg-card); }
+}
+
+.page-header {
+  padding: 28px 20px 16px;
+  max-width: 860px;
+  margin: 0 auto;
+  h1 { font-size: 24px; font-weight: 700; }
+  p  { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  text-align: center;
+  .material-icons { font-size: 48px; opacity: 0.4; margin-bottom: 12px; }
+  p { font-size: 14px; }
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }

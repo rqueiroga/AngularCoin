@@ -1,0 +1,76 @@
+<div class="settings-page">
+  <div class="page-header">
+    <h1>Configurações</h1>
+    <p>Personalize o AngularCoin</p>
+  </div>
+
+  <div class="settings-section card">
+    <h2>Moedas padrão</h2>
+    <div class="setting-row">
+      <label>Moeda de origem</label>
+      <select [(ngModel)]="settings.defaultFrom">
+        <option *ngFor="let c of currencies" [value]="c.code">{{ c.code }} — {{ c.name }}</option>
+      </select>
+    </div>
+    <div class="setting-row">
+      <label>Moeda de destino</label>
+      <select [(ngModel)]="settings.defaultTo">
+        <option *ngFor="let c of currencies" [value]="c.code">{{ c.code }} — {{ c.name }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="settings-section card">
+    <h2>Atualização de taxas</h2>
+    <div class="setting-row">
+      <label>Frequência de atualização</label>
+      <select [(ngModel)]="settings.updateFrequency">
+        <option value="always">Sempre (a cada conversão)</option>
+        <option value="hourly">A cada hora</option>
+        <option value="daily">Uma vez por dia</option>
+      </select>
+    </div>
+    <div class="info-row">
+      <span class="material-icons">schedule</span>
+      <span>Última atualização: {{ lastUpdatedLabel }}</span>
+    </div>
+    <div class="info-row">
+      <span class="material-icons">storage</span>
+      <span>Cache de taxas: {{ cacheSize }}</span>
+    </div>
+  </div>
+
+  <div class="settings-section card">
+    <h2>Dados e privacidade</h2>
+    <div class="info-row">
+      <span class="material-icons">history</span>
+      <span>Conversões salvas: {{ historyCount }}</span>
+    </div>
+    <button class="btn btn-ghost danger-btn" (click)="clearHistory()" [disabled]="historyCount === 0">
+      <span class="material-icons">delete_sweep</span>
+      Limpar histórico
+    </button>
+  </div>
+
+  <div class="settings-section card about-card">
+    <h2>Sobre</h2>
+    <div class="about-info">
+      <div class="app-logo">₿</div>
+      <div>
+        <strong>AngularCoin v1.0.0</strong>
+        <p>Conversor de moedas em tempo real</p>
+        <p class="api-credit">Powered by <a href="https://www.frankfurter.app" target="_blank">Frankfurter API</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-area">
+    <button class="btn btn-primary save-btn" (click)="save()">
+      <span class="material-icons">save</span>
+      Salvar configurações
+    </button>
+    <div class="saved-msg" *ngIf="savedMsg">
+      <span class="material-icons">check_circle</span> {{ savedMsg }}
+    </div>
+  </div>
+</div>

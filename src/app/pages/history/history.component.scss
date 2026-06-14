@@ -1,0 +1,93 @@
+.history-page { padding: 0 0 20px; }
+
+.header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.confirm-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-danger {
+  padding: 10px 16px;
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.history-list {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.history-item {
+  padding: 16px;
+}
+
+.item-main {
+  margin-bottom: 10px;
+}
+
+.currencies {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  .from-cur { font-size: 16px; font-weight: 700; color: var(--accent); }
+  .to-cur   { font-size: 16px; font-weight: 700; color: var(--primary); }
+  .arrow    { font-size: 16px; color: var(--text-muted); }
+}
+
+.amounts {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+  .from-amount { font-size: 18px; font-weight: 600; color: var(--text-muted); }
+  .to-amount   { font-size: 20px; font-weight: 700; color: var(--text); }
+}
+
+.rate-info {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.item-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.timestamp { font-size: 11px; color: var(--text-muted); }
+
+.btn-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  .material-icons { font-size: 14px; }
+  &:hover { background: var(--danger); border-color: var(--danger); color: #fff; }
+}
+
+@media (min-width: 768px) {
+  .history-page { max-width: 860px; margin: 0 auto; padding: 0 20px 40px; }
+  .history-list { padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}

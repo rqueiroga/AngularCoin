@@ -1,0 +1,107 @@
+<div class="converter-page">
+
+  <!-- Offline Banner -->
+  <div class="offline-banner" *ngIf="isOffline">
+    <span class="material-icons">wifi_off</span>
+    Modo offline — usando taxas em cache
+  </div>
+
+  <div class="page-header">
+    <h1>Conversor de Moedas</h1>
+    <p *ngIf="lastUpdated">Atualizado às {{ lastUpdated }}</p>
+  </div>
+
+  <!-- Error -->
+  <div class="error-msg" *ngIf="error">
+    <span class="material-icons">error_outline</span> {{ error }}
+  </div>
+
+  <!-- Main Card -->
+  <div class="card converter-card">
+
+    <!-- FROM -->
+    <div class="currency-block">
+      <label>De</label>
+      <div class="currency-selector">
+        <div class="selector-btn" (click)="showFromDropdown = !showFromDropdown; showToDropdown = false">
+          <span class="currency-flag">{{ fromCurrency }}</span>
+          <span class="material-icons">expand_more</span>
+        </div>
+        <div class="dropdown" *ngIf="showFromDropdown">
+          <input type="text" placeholder="Buscar moeda..." [value]="searchFrom"
+                 (input)="filterFrom($any($event.target).value)" (blur)="closeDropdowns()" autofocus>
+          <div class="dropdown-list">
+            <div class="dropdown-item" *ngFor="let c of filteredFrom" (mousedown)="selectFrom(c.code)">
+              <span class="code">{{ c.code }}</span>
+              <span class="name">{{ c.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input class="amount-input" type="number" [(ngModel)]="amount"
+             (ngModelChange)="onAmountChange()" min="0" step="any" placeholder="0,00">
+    </div>
+
+    <!-- Swap Button -->
+    <div class="swap-area">
+      <button class="swap-btn" (click)="swapCurrencies()" title="Inverter moedas">
+        <span class="material-icons">swap_vert</span>
+      </button>
+      <div class="rate-badge" *ngIf="rate !== null">
+        1 {{ fromCurrency }} = {{ formatNumber(rate ?? 0) }} {{ toCurrency }}
+      </div>
+    </div>
+
+    <!-- TO -->
+    <div class="currency-block">
+      <label>Para</label>
+      <div class="currency-selector">
+        <div class="selector-btn" (click)="showToDropdown = !showToDropdown; showFromDropdown = false">
+          <span class="currency-flag">{{ toCurrency }}</span>
+          <span class="material-icons">expand_more</span>
+        </div>
+        <div class="dropdown" *ngIf="showToDropdown">
+          <input type="text" placeholder="Buscar moeda..." [value]="searchTo"
+                 (input)="filterTo($any($event.target).value)" (blur)="closeDropdowns()" autofocus>
+          <div class="dropdown-list">
+            <div class="dropdown-item" *ngFor="let c of filteredTo" (mousedown)="selectTo(c.code)">
+              <span class="code">{{ c.code }}</span>
+              <span class="name">{{ c.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="result-display">
+        <span *ngIf="loading" class="loading-dots">
+          <span></span><span></span><span></span>
+        </span>
+        <span *ngIf="!loading && result !== null" class="result-value">
+          {{ formatNumber(result) }}
+        </span>
+        <span *ngIf="!loading && result === null" class="result-placeholder">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Convert Button -->
+  <button class="btn btn-primary convert-btn" (click)="loadRates()" [disabled]="loading">
+    <span class="material-icons">{{ loading ? 'hourglass_empty' : 'refresh' }}</span>
+    {{ loading ? 'Atualizando...' : 'Atualizar taxas' }}
+  </button>
+
+  <!-- Quick Amounts -->
+  <div class="quick-amounts card">
+    <p class="section-label">Conversões rápidas</p>
+    <div class="quick-grid" *ngIf="rate !== null">
+      <div class="quick-item" *ngFor="let v of [1, 10, 100, 1000, 5000, 10000]">
+        <span class="qv-from">{{ formatNumber(v) }} {{ fromCurrency }}</span>
+        <span class="qv-arrow">→</span>
+        <span class="qv-to">{{ formatNumber(v * safeRate) }} {{ toCurrency }}</span>
+      </div>
+    </div>
+    <div *ngIf="rate === null" class="empty-state" style="padding: 20px">
+      <p>Realize uma conversão para ver os valores rápidos</p>
+    </div>
+  </div>
+
+</div>
